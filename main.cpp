@@ -29,6 +29,7 @@ private:
 	string b;
 	vector<string>word;
 	vector<string>word2;
+	//vector<string>word3;
 
 public:
 
@@ -77,6 +78,7 @@ public:
 	void Print()
 	{
 		int kol = 0;
+		word2.push_back(word2[0]);
 		for (int i = 0; i < word2[0].size(); i++)
 		{
 
@@ -88,14 +90,91 @@ public:
 			if (i % 2 == 0 && kol < 2)
 			{
 				kol++;
+				word2[1][i] = word2[0][i];
 				cout <<"[" << word2[0][i]<<"]" << "\t";
 			}
 			else
 			{
+				word2[1][i] ='*';
 				cout << "[*]" << "\t";
 			}
 		}
 	}
+
+	void Ugadaika()
+	{
+		int kol = 0;
+		int kol2 = 0;
+		bool win=false;
+
+		string u;
+		while (win==false)
+		{
+
+			bool f = false;
+			cout << "Enter bukvu[simvol]: ";
+			cin >> u;
+
+			for (int i = 0; i < word2[0].size(); i++)
+			{
+				if (i % 2 == 0 && kol < 2)
+				{
+					kol++;
+					cout << "[" << word2[0][i] << "]" << "\t";
+				}
+				else if (word2[0][i] == u[0])
+				{
+					word2[1][i] = u[0];
+					cout << "[" << word2[0][i] << "]" << "\t";
+					f = true;
+				}
+				else if(word2[0][i]!=u[0])
+				{
+					cout <<"[" << word2[1][i] << "]" << "\t";
+				}
+			}
+			if (f == false)
+			{
+				kol2++;
+				cout << "\n";
+				cout << kol2;
+			}
+			if (kol2 == 1&&f==false)
+			{
+				cout << "You have 1 lose\n";
+			}
+			if (kol2 == 2&&f==false)
+			{
+				cout << "You have 2 lose\n";
+			}
+			if (kol2 == 3)
+			{
+				win = true;
+				cout << "Yo lose 0 shansov\n";
+				break;
+			}
+			for (int i = 0; i < word2[1][i]; i++)
+			{
+				if (word2[1][i] != '*')
+				{
+					win = true;
+					
+				}
+				else
+				{
+					win = false;
+					break;
+				}
+
+			}
+			if (win == true)
+			{
+				cout << "Yo Win\n";
+			}
+			
+		}
+	}
+
 
 };
 
@@ -105,6 +184,9 @@ int main()
 	Vis.Write();
 	Vis.Read();
 	Vis.Print();
+	Vis.Ugadaika();
+
+
 	return EXIT_SUCCESS;
 }
 
