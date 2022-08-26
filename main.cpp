@@ -27,9 +27,10 @@ class Viselica
 private:
 	string str;
 	string b;
+	int kol2 = 0;
+	bool win = false;
 	vector<string>word;
 	vector<string>word2;
-	//vector<string>word3;
 
 public:
 
@@ -40,6 +41,11 @@ public:
 		word.push_back(str);
 		system("cls");
 	}
+	int getKol2()
+	{
+		return kol2;
+	}
+
 	void Write()
 	{
 		ENT();
@@ -104,9 +110,7 @@ public:
 	void Ugadaika()
 	{
 		int kol = 0;
-		int kol2 = 0;
-		bool win=false;
-
+		
 		string u;
 		while (win==false)
 		{
@@ -137,20 +141,28 @@ public:
 			{
 				kol2++;
 				cout << "\n";
-				cout << kol2;
+				/*cout << kol2;*/
 			}
 			if (kol2 == 1&&f==false)
 			{
-				cout << "You have 1 lose\n";
+				cout << "You have 4 tries\n";
 			}
 			if (kol2 == 2&&f==false)
 			{
-				cout << "You have 2 lose\n";
+				cout << "You have 3 tries\n";
 			}
-			if (kol2 == 3)
+			if (kol2 == 3 && f == false)
+			{
+				cout << "You have 2 tries\n";
+			}
+			if (kol2 == 4 && f == false)
+			{
+				cout << "You have 1 try\n";
+			}
+			if (kol2 == 5)
 			{
 				win = true;
-				cout << "Yo lose 0 shansov\n";
+				cout << "You Lose!\n";
 				break;
 			}
 			for (int i = 0; i < word2[1][i]; i++)
@@ -165,27 +177,128 @@ public:
 					win = false;
 					break;
 				}
-
 			}
 			if (win == true)
 			{
 				cout << "Yo Win\n";
 			}
-			
 		}
 	}
 
+	void Test()
+	{
+		
+		using namespace sf;
+		RenderWindow window(VideoMode(900, 500), "SFML Works!"/*,Style::Fullscreen*/);
+
+		Sprite spriteFon;
+		Texture textureFon;
+		textureFon.loadFromFile("resources\\WildWest2.png");
+		spriteFon.setTexture(textureFon);
+
+		spriteFon.setScale(0.15, 0.15);
+
+		window.draw(spriteFon);
+		
+		Texture texture;
+		texture.loadFromFile("resources\\Vis.png");
+
+		Sprite sprite;
+
+		sprite.setTexture(texture);
+		sprite.setTextureRect(IntRect(20, 64, 210, 326));//x,y,x,y
+		sprite.setPosition(350, 150);//x,y
+
+		Texture texture2;
+		texture2.loadFromFile("resources\\Over.png");
+		Sprite sprite2;
+
+		sprite2.setTexture(texture2);
+	
+		sprite2.setPosition(-525,-50);
+
+		while (window.isOpen())
+		{
+			bool a = false;
+			Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == Event::Closed)
+					window.close();
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Space))
+			{
+				window.close();
+			}
+			if (getKol2() == 1)
+			{
+				sprite.setTexture(texture);
+				sprite.setTextureRect(IntRect(239, 64, 205, 326));
+			}
+			if (getKol2() == 2)
+			{
+				sprite.setTexture(texture);
+				sprite.setTextureRect(IntRect(467, 64, 205, 326));
+			}
+			if (getKol2() == 3)
+			{
+				sprite.setTexture(texture);
+				sprite.setTextureRect(IntRect(687, 64, 205, 326));
+			}
+			if (getKol2() == 4)
+			{
+				sprite.setTexture(texture);
+				sprite.setTextureRect(IntRect(915, 64, 205, 326));
+			}
+			if (getKol2() == 5)
+			{
+				sprite.setTexture(texture);
+				sprite.setTextureRect(IntRect(1130, 64, 215, 326));
+				sprite2.setPosition(110, 15);
+				sprite2.setScale(0.5,0.5);
+				a = true;
+			}
+			
+			window.clear(Color::White);
+			window.draw(spriteFon);
+			window.draw(sprite);
+			window.draw(sprite2);
+
+			window.display();
+
+			if (win == true)
+			{
+				window.clear(Color::White);
+				Texture Texture3;
+				Texture3.loadFromFile("resources\\Win2.png");
+				Sprite sprite3;
+				sprite3.setPosition(66, -50);
+				sprite3.setTexture(Texture3);
+				sprite3.setScale(0.66, 0.66);
+				window.draw(sprite3);
+				window.display();
+				a = true;
+			}
+			if (a==true)
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+				window.close();
+			}
+		}
+	}
 
 };
 
 int main()
 {
+	using namespace sf;
 	Viselica Vis;
+	thread t(&Viselica::Test, &Vis);
 	Vis.Write();
 	Vis.Read();
 	Vis.Print();
 	Vis.Ugadaika();
-
+	t.join();
 
 	return EXIT_SUCCESS;
 }
