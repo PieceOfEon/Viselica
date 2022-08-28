@@ -112,6 +112,7 @@ public:
 		int kol = 0;
 		vector<string> nu;
 		string u;
+		double f1 = clock();
 		while (win==false)
 		{
 
@@ -161,8 +162,10 @@ public:
 			}
 			if (kol2 == 5)
 			{
+				double f2 = clock() - f1;
 				win = true;
 				cout << "You Lose!\n";
+				cout << "Time " << f2 / 1000 << "\n";
 				cout <<"WOrd->>" << word2[0]<<"\n";
 				cout << "number of mistakes->>" << kol2<<"\n";
 				cout << "My enter words->>\n";
@@ -190,12 +193,14 @@ public:
 			}
 			if (win == true)
 			{
+				double f2 = clock()-f1;
+				
 				cout << "Yo Win\n";
+				cout << "Time " << f2 / 1000<<"\n";
 				cout << "WOrd->>" <<word2[0]<<"\n";
 				cout <<"number of mistakes->>" << kol2<<"\n";
 				for (int i = 0; i < nu.size(); i++)
 				{
-
 					cout << i + 1 << ": " << nu[i] << "\n";
 				}
 
