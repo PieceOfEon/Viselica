@@ -110,7 +110,7 @@ public:
 	void Ugadaika()
 	{
 		int kol = 0;
-		
+		vector<string> nu;
 		string u;
 		while (win==false)
 		{
@@ -118,7 +118,7 @@ public:
 			bool f = false;
 			cout << "Enter bukvu[simvol]: ";
 			cin >> u;
-
+			nu.push_back(u);
 			for (int i = 0; i < word2[0].size(); i++)
 			{
 				if (i % 2 == 0 && kol < 2)
@@ -163,6 +163,16 @@ public:
 			{
 				win = true;
 				cout << "You Lose!\n";
+				cout <<"WOrd->>" << word2[0]<<"\n";
+				cout << "number of mistakes->>" << kol2<<"\n";
+				cout << "My enter words->>\n";
+				for (int i = 0; i < nu.size(); i++)
+				{
+					
+					cout<<i+1<<": " << nu[i] << "\n";
+				}
+
+				
 				break;
 			}
 			for (int i = 0; i < word2[1][i]; i++)
@@ -181,13 +191,21 @@ public:
 			if (win == true)
 			{
 				cout << "Yo Win\n";
+				cout << "WOrd->>" <<word2[0]<<"\n";
+				cout <<"number of mistakes->>" << kol2<<"\n";
+				for (int i = 0; i < nu.size(); i++)
+				{
+
+					cout << i + 1 << ": " << nu[i] << "\n";
+				}
+
 			}
 		}
 	}
 
+
 	void Test()
 	{
-		
 		using namespace sf;
 		RenderWindow window(VideoMode(900, 500), "SFML Works!"/*,Style::Fullscreen*/);
 
@@ -250,7 +268,7 @@ public:
 				sprite.setTexture(texture);
 				sprite.setTextureRect(IntRect(915, 64, 205, 326));
 			}
-			if (getKol2() == 5)
+			if (getKol2() == 5 && win==true)
 			{
 				sprite.setTexture(texture);
 				sprite.setTextureRect(IntRect(1130, 64, 215, 326));
@@ -266,7 +284,7 @@ public:
 
 			window.display();
 
-			if (win == true)
+			if (win == true&&getKol2()!=5)
 			{
 				window.clear(Color::White);
 				Texture Texture3;
